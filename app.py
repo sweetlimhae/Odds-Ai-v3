@@ -153,6 +153,11 @@ def live_games():
 
     url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds"
     params = {
+        "apiKey": ODDS_API_KEY,
+        "regions": "us",
+        "markets": "h2h",
+        "oddsFormat": "decimal",
+    }
   ...
 
 if __name__ == '__main__':
