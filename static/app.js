@@ -2,7 +2,7 @@ const sportEl = document.getElementById("sport");
 const windowEl = document.getElementById("window");
 const resultsEl = document.getElementById("results");
 
-document.getElementById("todayBtn")?.addEventListener("click", loadGames);
+document.getElementById("gamesBtn")?.addEventListener("click", loadGames);
 document.getElementById("analyzeBtn")?.addEventListener("click", analyze);
 
 async function analyze() {
