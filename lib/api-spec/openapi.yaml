@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: odds
+    description: Odds AI operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,59 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /games:
+    get:
+      operationId: getGames
+      tags: [odds]
+      summary: Get upcoming games
+      description: Returns games starting within the given time window
+      parameters:
+        - name: sport
+          in: query
+          schema:
+            type: string
+            enum: [all, soccer, baseball]
+            default: all
+        - name: window
+          in: query
+          schema:
+            type: integer
+            default: 60
+      responses:
+        "200":
+          description: List of upcoming games
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GamesResponse"
+
+  /recommendations:
+    get:
+      operationId: getRecommendations
+      tags: [odds]
+      summary: Get AI recommendations
+      description: Returns 2-fold parlay combos in conservative, balanced, and aggressive styles
+      parameters:
+        - name: sport
+          in: query
+          schema:
+            type: string
+            enum: [all, soccer, baseball]
+            default: all
+        - name: window
+          in: query
+          schema:
+            type: integer
+            default: 60
+      responses:
+        "200":
+          description: AI recommendations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecommendationsResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +89,179 @@ components:
       required:
         - status
 
+    Market:
+      type: object
+      properties:
+        pick:
+          type: string
+        type:
+          type: string
+        odds:
+          type: number
+        open_odds:
+          type: number
+        sharp_odds:
+          type: number
+        score:
+          type: integer
+        risk:
+          type: string
+          enum: [low, medium, high]
+        reasons:
+          type: array
+          items:
+            type: string
+        ev:
+          type: number
+      required:
+        - pick
+        - type
+        - odds
+        - open_odds
+        - sharp_odds
+        - score
+        - risk
+        - reasons
+
+    Game:
+      type: object
+      properties:
+        sport:
+          type: string
+        league:
+          type: string
+        home:
+          type: string
+        away:
+          type: string
+        starts_at:
+          type: string
+        start_in_minutes:
+          type: integer
+        markets:
+          type: array
+          items:
+            $ref: "#/components/schemas/Market"
+      required:
+        - sport
+        - league
+        - home
+        - away
+        - starts_at
+        - start_in_minutes
+        - markets
+
+    GamesResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        games:
+          type: array
+          items:
+            $ref: "#/components/schemas/Game"
+      required:
+        - count
+        - games
+
+    Pick:
+      type: object
+      properties:
+        pick:
+          type: string
+        type:
+          type: string
+        odds:
+          type: number
+        open_odds:
+          type: number
+        sharp_odds:
+          type: number
+        score:
+          type: integer
+        risk:
+          type: string
+        reasons:
+          type: array
+          items:
+            type: string
+        ev:
+          type: number
+        sport:
+          type: string
+        league:
+          type: string
+        home:
+          type: string
+        away:
+          type: string
+        game_key:
+          type: string
+        start_in_minutes:
+          type: integer
+      required:
+        - pick
+        - type
+        - odds
+        - open_odds
+        - sharp_odds
+        - score
+        - risk
+        - reasons
+        - sport
+        - league
+        - home
+        - away
+        - game_key
+        - start_in_minutes
+
+    Combo:
+      type: object
+      properties:
+        type:
+          type: string
+        total_odds:
+          type: number
+        avg_score:
+          type: number
+        picks:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pick"
+      required:
+        - type
+        - total_odds
+        - avg_score
+        - picks
+
+    RecommendationsResponse:
+      type: object
+      properties:
+        sport:
+          type: string
+        window:
+          type: integer
+        games:
+          type: array
+          items:
+            $ref: "#/components/schemas/Game"
+        recommendations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Combo"
+        excluded:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pick"
+        mode:
+          type: string
+        notice:
+          type: string
+      required:
+        - sport
+        - window
+        - games
+        - recommendations
+        - excluded
+        - mode
+        - notice

@@ -1,0 +1,21 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: radial-gradient(circle at top, #17345a, #0b172a); color: #f4f7fb; }
+.container { max-width: 920px; margin: 0 auto; padding: 56px 18px; }
+h1 { font-size: 52px; margin: 0 0 12px; }
+.sub { color: #cbd7ea; font-weight: 700; }
+.controls { display: flex; gap: 10px; flex-wrap: wrap; margin: 26px 0; }
+select, button { border: 0; border-radius: 18px; padding: 16px 18px; font-size: 18px; font-weight: 800; }
+button { background: #39e447; color: #06310b; cursor: pointer; }
+.results { margin-top: 24px; display: grid; gap: 18px; }
+.card { background: rgba(18, 34, 58, .88); border: 1px solid rgba(255,255,255,.12); border-radius: 22px; padding: 24px; box-shadow: 0 12px 36px rgba(0,0,0,.25); }
+.card h2 { margin-top: 0; }
+.tag { color: #9ed0ff; font-weight: 800; margin-bottom: 8px; }
+.market, .pick { background: rgba(255,255,255,.06); border-radius: 16px; padding: 14px; margin-top: 12px; }
+.row, .summary { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.summary span { background: rgba(57,228,71,.14); color: #9aff9f; border-radius: 999px; padding: 8px 12px; font-weight: 900; }
+.low { border-left: 4px solid #39e447; }
+.medium { border-left: 4px solid #f5ce42; }
+.high { border-left: 4px solid #ff6b6b; }
+.notice { background: rgba(255,255,255,.12); padding: 14px 18px; border-radius: 16px; color: #dbe8ff; }
+.danger { border-color: rgba(255, 107, 107, .5); }
+@media (max-width: 520px) { h1 { font-size: 42px; } select, button { width: 100%; } }

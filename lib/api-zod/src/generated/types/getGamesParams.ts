@@ -5,7 +5,9 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { GetGamesSport } from './getGamesSport';
 
-export interface HealthStatus {
-  status: string;
-}
+export type GetGamesParams = {
+sport?: GetGamesSport;
+window?: number;
+};

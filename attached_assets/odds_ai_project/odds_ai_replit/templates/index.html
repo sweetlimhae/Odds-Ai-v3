@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Odds AI</title>
+  <link rel="manifest" href="/static/manifest.json" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Odds AI</h1>
+    <p class="sub">30분/1시간 전 경기 기준 2폴더 추천</p>
+
+    <div class="controls">
+      <select id="sport">
+        <option value="all">전체</option>
+        <option value="soccer">축구</option>
+        <option value="baseball">야구</option>
+      </select>
+      <select id="window">
+        <option value="30">30분 전</option>
+        <option value="60" selected>1시간 전</option>
+      </select>
+      <button id="gamesBtn">오늘 경기</button>
+      <button id="analyzeBtn">AI 분석</button>
+    </div>
+
+    <section id="results" class="results"></section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
