@@ -1,10 +1,11 @@
 from flask import Flask, jsonify, render_template, request
 from datetime import datetime, timedelta, timezone
 from itertools import combinations
-
+import os
+import requests
 app = Flask(__name__)
 KST = timezone(timedelta(hours=9))
-
+ODDS_API_KEY = os.getenv("ODDS_API_KEY")
 
 def demo_games(sport='all'):
     now = datetime.now(KST)
@@ -136,7 +137,23 @@ def recommendations():
         'mode': 'demo',
         'notice': '현재는 데모 데이터입니다. 다음 단계에서 공개 Odds API/BMBets/Pinnacle 데이터 연결 구조를 붙이면 됩니다.'
     })
+@app.route("/api/live-games")
+def live_games():
+    sport = request.args.get("sport", "soccer")
+    minutes = int(request.args.get("minutes", 60))
 
+    if not ODDS_API_KEY:
+        return jsonify({
+            "mode": "demo",
+            "notice": "ODDS_API_KEY가 없어 데모 데이터를 표시합니다.",
+            "games": demo_games(sport)
+        })
+
+    sport_key = "soccer_epl" if sport in ["soccer", "all"] else "baseball_mlb"
+
+    url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds"
+    params = {
+  ...
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
